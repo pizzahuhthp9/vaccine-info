@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Chart from "chart.js/auto";
-Chart.register()
 
 class GraphPreview extends Component {
   constructor(props) {
@@ -12,12 +11,13 @@ class GraphPreview extends Component {
   render() {
     return (
       <div className="w-3/5">
-        <canvas id="myChart" className="w-full h-auto"></canvas>
+        <canvas id={this.props.name} className="w-full h-auto"></canvas>
       </div>
     );
   }
 
   componentDidMount() {
+    console.log(this.props.data);
     const labels = this.props.data.map((data)=>{
       return data.date
     })
@@ -28,7 +28,7 @@ class GraphPreview extends Component {
       return data.secondDose
     })
     
-    const ctx = document.getElementById("myChart");
+    const ctx = document.getElementById(this.props.name);
     new Chart(ctx, {
         type: 'line',
         data: {
@@ -54,6 +54,7 @@ class GraphPreview extends Component {
 
 GraphPreview.propTypes = {
   data: PropTypes.array.isRequired,
+  name: PropTypes.string.isRequired
 };
 
 export default GraphPreview;
