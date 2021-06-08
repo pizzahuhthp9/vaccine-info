@@ -6,10 +6,11 @@ class GraphInput extends Component {
     super(props);
     this.submit = this.submit.bind(this);
     this.inputHandle = this.inputHandle.bind(this);
+    this.addError = this.addError.bind(this);
     this.state = {
       input: {
-        firstDoseAmount: undefined,
-        secondDoseAmount: undefined,
+        firstDoseAmount: "",
+        secondDoseAmount: "",
         errors: [],
       },
     };
@@ -44,7 +45,11 @@ class GraphInput extends Component {
           <div className="flex justify-between">
             <div>
               {this.state.input.errors.map((error) => {
-                return <p className="text-red-500"  key={error}>{error}</p>;
+                return (
+                  <p className="text-red-500" key={error}>
+                    {error}
+                  </p>
+                );
               })}
             </div>
             <input type="submit" className="py-1 w-2/5" />
@@ -64,27 +69,37 @@ class GraphInput extends Component {
     });
   }
 
+  addError(errorText) {
+    this.setState((state) => {
+      let input = { ...state.input };
+      input.errors = input.errors.filter((error) => {
+        return error !== errorText;
+      });
+      input.errors.push(errorText);
+
+      return {
+        input: input,
+      };
+    });
+  }
+
   submit(e) {
     e.preventDefault();
     if (
-      this.state.input.firstDoseAmount === undefined ||
-      this.state.input.firstDoseAmount === undefined
+      this.state.input.firstDoseAmount === "" ||
+      this.state.input.secondDoseAmount === ""
     ) {
-      this.setState((state) => {
-        let input = { ...state.input };
-        input.errors = input.errors.filter((error) => {
-          return error !== "please fill all blank form";
-        });
-        input.errors.push("please fill all blank form");
-
-        return {
-          input: input,
-        };
-      });
-      console.log(this.state.input);
-    } else {
-      this.props.submit();
+      this.addError("please fill all blanked form");
+      return;
     }
+    this.setState((state)=>{
+        let input = {...state.input}
+        input.errors = []
+        return {
+            input: input
+        }
+    })
+    this.props.submit();
   }
 }
 
