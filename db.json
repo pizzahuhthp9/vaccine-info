@@ -239,6 +239,12 @@
       "firstDose": 3243913,
       "secondDose": 1391028,
       "id": 40
+    },
+    {
+      "date": "8-Jun-2021",
+      "firstDose": 3672372,
+      "secondDose": 1434697,
+      "id": 41
     }
   ]
 }
