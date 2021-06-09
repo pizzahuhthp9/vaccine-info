@@ -92,14 +92,19 @@ class GraphInput extends Component {
       this.addError("please fill all blanked form");
       return;
     }
+    this.props.submit(this.state.input);
+
     this.setState((state)=>{
         let input = {...state.input}
         input.errors = []
+        input.firstDoseAmount = ""
+        input.secondDoseAmount = ""
         return {
             input: input
         }
     })
-    this.props.submit();
+    
+    
   }
 }
 

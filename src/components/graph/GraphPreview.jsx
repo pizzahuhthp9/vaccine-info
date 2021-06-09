@@ -6,18 +6,18 @@ class GraphPreview extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      chart: null
     };
   }
   render() {
     return (
-      <div className="w-3/5">
-        <canvas id={this.props.name} className="w-full h-auto"></canvas>
+      <div className="">
+        <canvas id={this.props.name}></canvas>
       </div>
     );
   }
 
   componentDidMount() {
-    console.log(this.props.data);
     const labels = this.props.data.map((data)=>{
       return data.date
     })
@@ -29,7 +29,7 @@ class GraphPreview extends Component {
     })
     
     const ctx = document.getElementById(this.props.name);
-    new Chart(ctx, {
+    const chart = new Chart(ctx, {
         type: 'line',
         data: {
             labels, 
@@ -48,7 +48,20 @@ class GraphPreview extends Component {
             }]
         },
     })
+    this.setState({
+      chart
+    })
+  }
 
+  componentDidUpdate(prevprops){
+    if (prevprops === this.props) {
+      return
+    }
+    this.state.chart.data.labels.push(this.props.data[this.props.data.length - 1].date)
+    this.state.chart.data.datasets[0].data.push(this.props.data[this.props.data.length - 1].firstDose)
+    this.state.chart.data.datasets[1].data.push(this.props.data[this.props.data.length - 1].secondDose)
+
+    this.state.chart.update();
   }
 }
 
