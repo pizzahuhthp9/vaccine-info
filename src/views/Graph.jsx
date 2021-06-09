@@ -28,7 +28,10 @@ class Graph extends Component {
           )}
         </div>
         <div className="row-span-2">
-          <GraphInfo></GraphInfo>
+          {
+            this.state.isloaded && (
+              <GraphInfo data={this.state.enumerateData}></GraphInfo>
+          )}
         </div>
         <div className="col-span-2">
         {this.state.isloaded && (
