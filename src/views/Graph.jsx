@@ -19,7 +19,7 @@ class Graph extends Component {
   render() {
     return (
       <div className="space-y-12 grid grid-cols-3">
-        <div className="col-span-3">
+        <div className="col-span-3 ">
           <GraphInput submit={this.addData}></GraphInput>
         </div>
         <div className="col-span-2">
